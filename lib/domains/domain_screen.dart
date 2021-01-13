@@ -136,15 +136,21 @@ class _DomainScreenState extends State<DomainScreen> {
                       flex: 2,
                       child: ClipRect(
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                        Expanded(flex: 1,child: Center(child: ClipRect(child: Text(domain.name, textAlign: TextAlign.center,style: TextStyle(color: Colors.white, fontSize: 30,  fontWeight: FontWeight.bold),)))),
-                        Expanded(flex: 2,child: ClipRect(child: Text(domain.tagLine, textAlign: TextAlign.center,style: TextStyle(color: Colors.white.withOpacity(0.9), fontSize: 14,  fontStyle: FontStyle.italic),))),
+                        Expanded(flex: 3,child: Container(
+                          alignment: Alignment.bottomCenter,
+                          child: ClipRect(child: Padding(
+                            padding: const EdgeInsets.only(top: 16.0),
+                            child: Text(domain.name, textAlign: TextAlign.center,style: TextStyle(color: Colors.white, fontSize: 30,  fontWeight: FontWeight.bold),),
+                          )),
+                        )),
+                        Expanded(flex: 2,child: Center(child: ClipRect(child: Text(domain.tagLine, textAlign: TextAlign.center,style: TextStyle(color: Colors.white.withOpacity(0.9), fontSize: 14,  fontStyle: FontStyle.italic),)))),
 
                     ],
                   ),
                       )),
-                  Expanded(flex: 2,child: ClipRect(child: Center(child: CachedNetworkImage(imageUrl: domain.image,color: Colors.white.withOpacity(0.9), width: 200,)))),
+                  Expanded(flex: 3,child: ClipRect(child: Center(child: CachedNetworkImage(imageUrl: domain.image,color: Colors.white.withOpacity(0.9), width: 200,)))),
                   Expanded(flex: 1, child: ClipRect(
                     child: Center(child: GestureDetector(
                       onTap: (){
