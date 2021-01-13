@@ -118,35 +118,48 @@ class _DomainScreenState extends State<DomainScreen> {
   Widget getDomainCard(DomainDm domain){
     return Hero(
       tag: domain.id,
-      child: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15))),
-        elevation: 10.0,
-        child: Container(
-          decoration: BoxDecoration(
-              color: Color(domain.color),
-              borderRadius: BorderRadius.all(Radius.circular(15))),
-          width: double.infinity,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+      child: Material(
+        type: MaterialType.transparency,
+        child: Card(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15))),
+          elevation: 10.0,
+          child: ClipRect(
+            child: Container(
+              decoration: BoxDecoration(
+                  color: Color(domain.color),
+                  borderRadius: BorderRadius.all(Radius.circular(15))),
+              width: double.infinity,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                      flex: 2,
+                      child: ClipRect(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                        Expanded(flex: 1,child: Center(child: ClipRect(child: Text(domain.name, textAlign: TextAlign.center,style: TextStyle(color: Colors.white, fontSize: 30,  fontWeight: FontWeight.bold),)))),
+                        Expanded(flex: 2,child: ClipRect(child: Text(domain.tagLine, textAlign: TextAlign.center,style: TextStyle(color: Colors.white.withOpacity(0.9), fontSize: 14,  fontStyle: FontStyle.italic),))),
 
-              Center(child: ClipRect(child: Text(domain.name, textAlign: TextAlign.center,style: TextStyle(color: Colors.white, fontSize: 30,  fontWeight: FontWeight.bold),))),
-              SizedBox(height: 8.0,),
-              Center(child: ClipRect(child: Text(domain.tagLine, textAlign: TextAlign.center,style: TextStyle(color: Colors.white.withOpacity(0.9), fontSize: 14,  fontStyle: FontStyle.italic),))),
-              Expanded(flex: 2,child: ClipRect(child: Center(child: CachedNetworkImage(imageUrl: domain.image,color: Colors.white.withOpacity(0.9), width: 200,)))),
-              Expanded(flex: 1, child: ClipRect(
-                child: Center(child: GestureDetector(
-                  onTap: (){
-                    Navigator.of(context).push(
-                        PageRouteBuilder(
-                          pageBuilder: (context, animation1, animation2) => TournamentScreen(domain),
-                          transitionDuration: Duration(milliseconds: 500),
-                        ),
-                    );
-                  },
-                  child: Text("View", style: TextStyle(color:  Colors.white),),)),
-              ))
-            ],
+                    ],
+                  ),
+                      )),
+                  Expanded(flex: 2,child: ClipRect(child: Center(child: CachedNetworkImage(imageUrl: domain.image,color: Colors.white.withOpacity(0.9), width: 200,)))),
+                  Expanded(flex: 1, child: ClipRect(
+                    child: Center(child: GestureDetector(
+                      onTap: (){
+                        Navigator.of(context).push(
+                            PageRouteBuilder(
+                              pageBuilder: (context, animation1, animation2) => TournamentScreen(domain),
+                              transitionDuration: Duration(milliseconds: 500),
+                            ),
+                        );
+                      },
+                      child: Text("View", style: TextStyle(color:  Colors.white),),)),
+                  ))
+                ],
+              ),
+            ),
           ),
         ),
       ),
