@@ -1,4 +1,5 @@
-import 'package:flutter/foundation.dart';
+import 'package:Hackathon/utils/custom_app_bar_title.dart';
+import 'package:flutter/material.dart';
 
 ///
 /// Meditab Software Inc. CONFIDENTIAL
@@ -17,19 +18,33 @@ import 'package:flutter/foundation.dart';
 /// is strictly forbidden unless prior written permission is obtained
 /// from Meditab Software Incorporated.
 
-/// <h1>sign_up_event</h1>
+/// <h1>home_screen</h1>
 /// 
 /// <p>
 /// 
 /// @author Vilashraj Patel (vilashp@meditab.com) Meditab Software Inc.
 /// @version 1.0
-/// @since 1/12/21 3:17 pm
+/// @since 1/13/21 3:13 pm
 /// 
 
-abstract class SignUpEvent {}
-class SignUpButtonPressed extends SignUpEvent{
-  String userName;
-  String password;
-  SignUpButtonPressed({@required this.userName, @required this.password});
+class HomeScreen extends StatefulWidget {
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
 }
-class EmptyEvent extends SignUpEvent{}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(body: getBody());
+  }
+
+  Widget getBody(){
+    return Column(
+      children: [
+        CustomAppBarTitle(
+          "Home",
+        ),
+      ],
+    );
+  }
+}

@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+import 'package:Hackathon/profile/profile_dm.dart';
 
 ///
 /// Meditab Software Inc. CONFIDENTIAL
@@ -17,19 +17,23 @@ import 'package:flutter/foundation.dart';
 /// is strictly forbidden unless prior written permission is obtained
 /// from Meditab Software Incorporated.
 
-/// <h1>sign_up_event</h1>
+/// <h1>profile_event</h1>
 /// 
 /// <p>
 /// 
 /// @author Vilashraj Patel (vilashp@meditab.com) Meditab Software Inc.
 /// @version 1.0
-/// @since 1/12/21 3:17 pm
+/// @since 1/13/21 1:00 pm
 /// 
 
-abstract class SignUpEvent {}
-class SignUpButtonPressed extends SignUpEvent{
-  String userName;
-  String password;
-  SignUpButtonPressed({@required this.userName, @required this.password});
+abstract class ProfileEvent {}
+class FetchProfile extends ProfileEvent{}
+class UpdateProfile extends ProfileEvent{
+  ProfileDm profileDm;
+  UpdateProfile(this.profileDm);
 }
-class EmptyEvent extends SignUpEvent{}
+
+class EmptyEvent extends ProfileEvent{
+  ProfileDm profileDm;
+  EmptyEvent(this.profileDm);
+}

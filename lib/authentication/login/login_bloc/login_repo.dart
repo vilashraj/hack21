@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:Hackathon/authentication/login/login_bloc/login_event.dart';
 import 'package:Hackathon/authentication/login/login_bloc/login_provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
 ///
@@ -32,11 +33,11 @@ import 'package:flutter/foundation.dart';
 
 class LoginRepo {
   LoginProvider loginProvider = LoginProvider();
-  login({@required String userName, @required String password})async{
+  Future<User> login({@required String userName, @required String password})async{
     return await loginProvider.login(userName: userName, password: password);
   }
 
-  socialLogin({@required SocialLogin socialLogin})async{
+  Future<User> socialLogin({@required SocialLogin socialLogin})async{
     return await loginProvider.socialLogin(socialLogin: socialLogin);
   }
 }

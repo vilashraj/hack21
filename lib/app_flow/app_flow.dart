@@ -3,6 +3,8 @@ import 'package:Hackathon/app_intro/welcome_screen.dart';
 import 'package:Hackathon/authentication/login/login_screen.dart';
 import 'package:Hackathon/authentication/sign_up/sign_up_screen.dart';
 import 'package:Hackathon/dashboard/dashboard_screen.dart';
+import 'package:Hackathon/profile/profile_ui.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -46,6 +48,9 @@ class _AppFlowState extends State<AppFlow> {
 
   @override
   void initState() {
+    Firebase.initializeApp(
+
+    );
   appFlowBloc = AppFlowBloc(SplashState());
   super.initState();
   }
@@ -82,6 +87,9 @@ class _AppFlowState extends State<AppFlow> {
           }
           else if(state is DashboardState){
             return DashboardScreen();
+          }
+          else if(state is ProfileState){
+            return ProfileUi(newlyCreatedProfile: true,);
           }
         return Container();
       },

@@ -1,4 +1,7 @@
 import 'package:Hackathon/authentication/login/login_bloc/login_repo.dart';
+import 'package:Hackathon/profile/profile_bloc/profile_provider.dart';
+import 'package:Hackathon/profile/profile_dm.dart';
+import 'package:Hackathon/utils/app_singleton.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'login_event.dart';
@@ -40,14 +43,24 @@ class LoginBloc extends Bloc<LoginEvent, LoginState>{
       if(event is LoginButtonPressed){
         yield LoginLoading();
         await loginRepo.login(userName: event.userName, password: event.password);
-        yield LoginSuccess();
+        ProfileDm profileDm = await ProfileProvider().getProfileData();
+        AppSingleton singleton = AppSingleton();
+        singleton.profileDm = profileDm;
+        yield LoginSuccess(isNewUser: profileDm == null);
       }
       else if(event is SocialButtonPressed){
         yield LoginLoading();
         await loginRepo.socialLogin(socialLogin: event.socialLogin);
-        yield LoginSuccess();
+        ProfileDm profileDm = await ProfileProvider().getProfileData();
+        AppSingleton singleton = AppSingleton();
+        singleton.profileDm = profileDm;
+        yield LoginSuccess(isNewUser: profileDm == null);
+      }
+      else if(event is EmptyEvent){
+        yield LoginUninitialized();
       }
     }catch(e){
+      print(e);
       yield LoginError(e.toString());
     }
   }

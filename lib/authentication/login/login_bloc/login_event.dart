@@ -39,3 +39,5 @@ class SocialButtonPressed extends LoginEvent{
   SocialLogin socialLogin;
   SocialButtonPressed({@required this.socialLogin});
 }
+
+class EmptyEvent extends LoginEvent{}

@@ -43,6 +43,9 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState>{
         await signUpRepo.signUp(password: event.password, userName: event.userName);
         yield SignUpSuccess();
       }
+      else if(event is EmptyEvent){
+        yield SignUpUninitialized();
+      }
     }catch(e){
       yield SignUpError(e.toString());
     }

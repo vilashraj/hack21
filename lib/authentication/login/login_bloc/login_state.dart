@@ -27,7 +27,10 @@
 abstract class LoginState {}
 class LoginUninitialized extends LoginState{}
 class LoginLoading extends LoginState{}
-class LoginSuccess extends LoginState{}
+class LoginSuccess extends LoginState{
+  bool isNewUser;
+  LoginSuccess({this.isNewUser = false});
+}
 class LoginError extends LoginState{
   String error;
   LoginError(this.error);

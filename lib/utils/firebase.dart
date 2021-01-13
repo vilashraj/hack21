@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 ///
 /// Meditab Software Inc. CONFIDENTIAL
@@ -17,19 +17,20 @@ import 'package:flutter/foundation.dart';
 /// is strictly forbidden unless prior written permission is obtained
 /// from Meditab Software Incorporated.
 
-/// <h1>sign_up_event</h1>
+/// <h1>firebase</h1>
 /// 
 /// <p>
 /// 
 /// @author Vilashraj Patel (vilashp@meditab.com) Meditab Software Inc.
 /// @version 1.0
-/// @since 1/12/21 3:17 pm
+/// @since 1/13/21 12:53 pm
 /// 
 
-abstract class SignUpEvent {}
-class SignUpButtonPressed extends SignUpEvent{
-  String userName;
-  String password;
-  SignUpButtonPressed({@required this.userName, @required this.password});
+class FirebaseUtil {
+
+  static FirebaseDatabase defaultDatabase = FirebaseDatabase(
+      databaseURL: 'https://hackathon21-ad3a9-default-rtdb.firebaseio.com/');
+
+  static const String profileDetail = "profileDetail";
+  static const String domains = "domains";
 }
-class EmptyEvent extends SignUpEvent{}

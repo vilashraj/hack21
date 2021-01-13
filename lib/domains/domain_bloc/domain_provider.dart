@@ -1,4 +1,9 @@
-import 'package:flutter/foundation.dart';
+import 'dart:convert';
+
+import 'package:Hackathon/utils/firebase.dart';
+import 'package:firebase_database/firebase_database.dart';
+
+import 'domain_dm.dart';
 
 ///
 /// Meditab Software Inc. CONFIDENTIAL
@@ -17,19 +22,32 @@ import 'package:flutter/foundation.dart';
 /// is strictly forbidden unless prior written permission is obtained
 /// from Meditab Software Incorporated.
 
-/// <h1>sign_up_event</h1>
+/// <h1>domain_provider</h1>
 /// 
 /// <p>
 /// 
 /// @author Vilashraj Patel (vilashp@meditab.com) Meditab Software Inc.
 /// @version 1.0
-/// @since 1/12/21 3:17 pm
+/// @since 1/13/21 5:54 pm
 /// 
 
-abstract class SignUpEvent {}
-class SignUpButtonPressed extends SignUpEvent{
-  String userName;
-  String password;
-  SignUpButtonPressed({@required this.userName, @required this.password});
+class DomainProvider {
+  final FirebaseDatabase database = FirebaseUtil.defaultDatabase;
+
+  Future<List<DomainDm>> fetchDomains()async{
+    List<DomainDm> domainList = [];
+    DatabaseReference ref = database.reference();
+    DataSnapshot snapshot = await ref.child(FirebaseUtil.domains).once();
+
+    if (snapshot != null && snapshot.value != null) {
+      for (var value in snapshot.value.values) {
+//      speakers.add(SpeakerDm.fromJson(value));
+        var valueMap = jsonDecode(jsonEncode(value));
+        domainList.add(DomainDm.fromJson((valueMap)));
+      }
+    }
+
+    return domainList;
+
+  }
 }
-class EmptyEvent extends SignUpEvent{}

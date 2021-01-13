@@ -1,4 +1,5 @@
-import 'package:flutter/foundation.dart';
+import 'package:Hackathon/domains/domain_bloc/domain_dm.dart';
+import 'package:Hackathon/domains/domain_bloc/domain_provider.dart';
 
 ///
 /// Meditab Software Inc. CONFIDENTIAL
@@ -17,19 +18,18 @@ import 'package:flutter/foundation.dart';
 /// is strictly forbidden unless prior written permission is obtained
 /// from Meditab Software Incorporated.
 
-/// <h1>sign_up_event</h1>
+/// <h1>domain_repo</h1>
 /// 
 /// <p>
 /// 
 /// @author Vilashraj Patel (vilashp@meditab.com) Meditab Software Inc.
 /// @version 1.0
-/// @since 1/12/21 3:17 pm
+/// @since 1/13/21 5:54 pm
 /// 
 
-abstract class SignUpEvent {}
-class SignUpButtonPressed extends SignUpEvent{
-  String userName;
-  String password;
-  SignUpButtonPressed({@required this.userName, @required this.password});
+class DomainRepo {
+  DomainProvider domainProvider = DomainProvider();
+  Future<List<DomainDm>> fetchAllDomains ()async{
+    return await domainProvider.fetchDomains();
+  }
 }
-class EmptyEvent extends SignUpEvent{}

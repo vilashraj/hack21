@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
 ///
@@ -27,7 +28,20 @@ import 'package:flutter/foundation.dart';
 /// 
 
 class SignUpProvider {
-  signUp({@required String password, @required String userName}){
-
+  Future<User> signUp({@required String password, @required String userName})async{
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: userName,
+          password: password
+      );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        throw('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        throw('The account already exists for that email.');
+      }
+    } catch (e) {
+      rethrow;
+    }
   }
 }

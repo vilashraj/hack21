@@ -1,3 +1,7 @@
+import 'package:Hackathon/domains/domain_screen.dart';
+import 'package:Hackathon/home/home_screen.dart';
+import 'package:Hackathon/more/more_screen.dart';
+import 'package:Hackathon/tournament/tournament_screen.dart';
 import 'package:flutter/material.dart';
 
 ///
@@ -32,6 +36,7 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+  int selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,8 +45,33 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   Widget getBody(){
-    return Center(
-      child: Text("Dashboard"),
+    return Column(
+      children: [
+
+        Expanded(
+          child: IndexedStack(
+            index: selectedIndex,
+            children: [
+              HomeScreen(),
+              DomainScreen(),
+              MoreScreen(),
+            ],
+          ),
+        ),
+        BottomNavigationBar(
+          currentIndex: selectedIndex,
+          onTap: (index){
+            setState(() {
+              selectedIndex = index;
+            });
+          },
+          items: [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+            BottomNavigationBarItem(icon: Icon(Icons.tour), label: "Tournaments"),
+            BottomNavigationBarItem(icon: Icon(Icons.settings), label: "Settings"),
+          ],
+        ),
+      ],
     );
   }
 }

@@ -49,6 +49,9 @@ class AppFlowBloc extends Bloc<AppFlowEvent, AppFlowState> {
     else if(event is SignUpEvent){
       yield SignUpState();
     }
+    else if(event is ProfileEvent){
+      yield ProfileState();
+    }
     else if(event is DashboardEvent){
       yield DashboardState();
     }

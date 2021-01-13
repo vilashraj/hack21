@@ -10,6 +10,7 @@ import 'package:Hackathon/components/rounded_button.dart';
 import 'package:Hackathon/components/rounded_input_field.dart';
 import 'package:Hackathon/components/rounded_password_field.dart';
 import 'package:Hackathon/utils/on_widget_did_build.dart';
+import 'package:Hackathon/utils/show_snackbar.dart';
 import 'package:Hackathon/utils/validators.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -133,7 +134,17 @@ class _LoginScreenState extends State<LoginScreen> {
                 }
                 else if(state is LoginSuccess){
                   onWidgetDidBuild((){
-                    appFlowBloc.add(DashboardEvent());
+                    if(state.isNewUser){
+                      appFlowBloc.add(ProfileEvent());
+                    }else{
+                      appFlowBloc.add(DashboardEvent());
+                    }
+                  });
+                }
+                else if(state is LoginError){
+                  onWidgetDidBuild((){
+                    showSnackbar(context: context, content: state.error);
+                    loginBloc.add(EmptyEvent());
                   });
                 }
                 return  RoundedButton(

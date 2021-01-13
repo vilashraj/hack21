@@ -1,5 +1,10 @@
+import 'dart:async';
+
 import 'package:Hackathon/app_flow/app_flow_bloc/app_flow_bloc.dart';
 import 'package:Hackathon/app_flow/app_flow_bloc/app_flow_event.dart';
+import 'package:Hackathon/app_intro/welcome_background.dart';
+import 'package:Hackathon/authentication/login/login_background.dart';
+import 'package:Hackathon/authentication/sign_up/sign_up_background.dart';
 import 'package:Hackathon/utils/on_widget_did_build.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,36 +35,139 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 /// @since 1/12/21 2:26 pm
 /// 
 
+
+
+
 class SplashScreen extends StatefulWidget {
+  final Color backgroundColor = Colors.white;
+  final TextStyle styleTextUnderTheLoader = TextStyle(
+      fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.black);
+
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
-
+class _SplashScreenState extends State<SplashScreen>
+    with TickerProviderStateMixin {
+  final splashDelay = 5;
   AppFlowBloc appFlowBloc;
 
+  AnimationController _controller;
+  AnimationController _appNameController;
   @override
   void initState() {
     super.initState();
+    _controller = AnimationController(
+        duration: const Duration(milliseconds: 2500), vsync: this);
+    _appNameController = AnimationController(
+        duration: const Duration(milliseconds: 500), vsync: this);
+
+    _controller.forward();
+    _appNameController.forward();
     appFlowBloc = BlocProvider.of<AppFlowBloc>(context);
     onWidgetDidBuild(()async{
-       Future.delayed(Duration(seconds: 2)).then((value){
-         appFlowBloc.add(WelcomeEvent());
-       });
+      Future.delayed(Duration(seconds: 2)).then((value){
+        appFlowBloc.add(WelcomeEvent());
+      });
 
     });
+
   }
+
+
+  @override
+  void dispose() {
+    this._controller.dispose();
+    this._appNameController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: getBody(),
-    );
-  }
+        body: WelcomeBackground(
+          child: LoginBackground(
+            child: SignUpBackground(
+              child: Container(
 
-  Widget getBody(){
-    return Center(
-      child: Text("splash"),
-    );
+                child: Column(
+                  children: <Widget>[
+                    Expanded(
+                      child: Center(
+                        child: Container(
+                            alignment: Alignment.center,
+                            child: Column(
+
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                ScaleTransition(
+                                    scale: Tween(begin: 0.1, end: 1.0).animate(
+                                        CurvedAnimation(
+                                            parent: _controller,
+                                            curve: Curves.elasticOut,
+
+                                            reverseCurve: Curves.elasticIn)),
+                                    child: Image.asset(
+                                        'assets/images/thinking.png',
+                                        height: 70,
+                                        width: 70,
+                                        color: Theme.of(context).primaryColor
+                                    )),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                FadeTransition(
+                                    opacity: _appNameController,
+                                    child: Text(
+                                      "Talent Hunt",
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black),
+                                    )),
+
+                                SizedBox(height: 3,),
+                                FadeTransition(
+                                    opacity: _appNameController,
+                                    child: Text(
+                                      "- Vilash Patel",
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.normal,
+                                          fontStyle: FontStyle.italic,
+                                          color: Theme.of(context).accentColor),
+                                    )),
+
+                              ],
+                            )),
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(10),
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            height: 10,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: <Widget>[
+                                  Text(
+                                    "1.0.0",
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                ]),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ));
   }
 }

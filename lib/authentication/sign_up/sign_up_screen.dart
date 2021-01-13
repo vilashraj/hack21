@@ -9,6 +9,7 @@ import 'package:Hackathon/components/rounded_button.dart';
 import 'package:Hackathon/components/rounded_input_field.dart';
 import 'package:Hackathon/components/rounded_password_field.dart';
 import 'package:Hackathon/utils/on_widget_did_build.dart';
+import 'package:Hackathon/utils/show_snackbar.dart';
 import 'package:Hackathon/utils/validators.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -79,6 +80,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     confirmPasswordController = TextEditingController();
     userNameFocus = FocusNode();
     confirmPasswordFocus = FocusNode();
+    passwordFocus = FocusNode();
     super.initState();
   }
 
@@ -115,14 +117,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
               RoundedInputField(
                 hintText: "Your Email",
+                controller: userNameController,
                 validator: Validators.emailValidation,
                 onChanged: (value) {},
               ),
               RoundedPasswordField(
+                controller: passwordController,
                 validator: Validators.passwordValidation,
                 onChanged: (value) {},
               ),
               RoundedPasswordField(
+                controller: confirmPasswordController,
                 validator:(value) => Validators.confirmPasswordValidation(passwordController.text, confirmPasswordController),
                 onChanged: (value) {},
               ),
@@ -134,9 +139,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       child: CircularProgressIndicator(),
                     );
                   }
+                  else if(state is SignUpError){
+                    onWidgetDidBuild((){
+                      showSnackbar(context: context, content: state.error);
+                      signUpBloc.add(EmptyEvent());
+                    });
+                  }
                   else if(state is SignUpSuccess){
                     onWidgetDidBuild((){
-                      appFlowBloc.add(DashboardEvent());
+                      appFlowBloc.add(ProfileEvent());
                     });
                   }
                   return  RoundedButton(

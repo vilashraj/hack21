@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-
 ///
 /// Meditab Software Inc. CONFIDENTIAL
 /// __________________
@@ -17,19 +15,14 @@ import 'package:flutter/foundation.dart';
 /// is strictly forbidden unless prior written permission is obtained
 /// from Meditab Software Incorporated.
 
-/// <h1>sign_up_event</h1>
+/// <h1>domain_event</h1>
 /// 
 /// <p>
 /// 
 /// @author Vilashraj Patel (vilashp@meditab.com) Meditab Software Inc.
 /// @version 1.0
-/// @since 1/12/21 3:17 pm
+/// @since 1/13/21 5:53 pm
 /// 
 
-abstract class SignUpEvent {}
-class SignUpButtonPressed extends SignUpEvent{
-  String userName;
-  String password;
-  SignUpButtonPressed({@required this.userName, @required this.password});
-}
-class EmptyEvent extends SignUpEvent{}
+abstract class DomainEvent {}
+class FetchDomain extends DomainEvent{}
