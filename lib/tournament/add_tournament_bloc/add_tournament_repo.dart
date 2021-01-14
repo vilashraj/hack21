@@ -1,4 +1,7 @@
-import 'package:firebase_database/firebase_database.dart';
+import 'package:Hackathon/tournament/add_tournament_bloc/add_tournament_provider.dart';
+import 'package:flutter/foundation.dart';
+
+import '../tournament_dm.dart';
 
 ///
 /// Meditab Software Inc. CONFIDENTIAL
@@ -17,22 +20,19 @@ import 'package:firebase_database/firebase_database.dart';
 /// is strictly forbidden unless prior written permission is obtained
 /// from Meditab Software Incorporated.
 
-/// <h1>firebase</h1>
+/// <h1>add_tournament_repo</h1>
 /// 
 /// <p>
 /// 
 /// @author Vilashraj Patel (vilashp@meditab.com) Meditab Software Inc.
 /// @version 1.0
-/// @since 1/13/21 12:53 pm
+/// @since 1/13/21 9:48 pm
 /// 
 
-class FirebaseUtil {
+class AddTournamentRepo {
+  AddTournamentProvider addTournamentProvider = AddTournamentProvider();
+  Future<TournamentDm> addTournament({@required TournamentDm tournament})async{
+    return await addTournamentProvider.addTournament(tournament: tournament);
+  }
 
-  static FirebaseDatabase defaultDatabase = FirebaseDatabase(
-      databaseURL: 'https://hackathon21-ad3a9-default-rtdb.firebaseio.com/');
-
-  static const String dateFormat = "dd MMM, yyyy - HH:mm a";
-  static const String profileDetail = "profileDetail";
-  static const String domains = "domains";
-  static const String tournaments = "tournaments";
-}
+  }

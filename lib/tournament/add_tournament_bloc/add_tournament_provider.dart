@@ -1,4 +1,9 @@
+import 'package:Hackathon/utils/firebase.dart';
+import 'package:Hackathon/utils/shared_pref_utils.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/foundation.dart';
+
+import '../tournament_dm.dart';
 
 ///
 /// Meditab Software Inc. CONFIDENTIAL
@@ -17,22 +22,27 @@ import 'package:firebase_database/firebase_database.dart';
 /// is strictly forbidden unless prior written permission is obtained
 /// from Meditab Software Incorporated.
 
-/// <h1>firebase</h1>
+/// <h1>add_tournament_provider</h1>
 /// 
 /// <p>
 /// 
 /// @author Vilashraj Patel (vilashp@meditab.com) Meditab Software Inc.
 /// @version 1.0
-/// @since 1/13/21 12:53 pm
+/// @since 1/13/21 9:48 pm
 /// 
 
-class FirebaseUtil {
+class AddTournamentProvider {
+  final FirebaseDatabase database = FirebaseUtil.defaultDatabase;
 
-  static FirebaseDatabase defaultDatabase = FirebaseDatabase(
-      databaseURL: 'https://hackathon21-ad3a9-default-rtdb.firebaseio.com/');
+  Future<TournamentDm> addTournament({@required TournamentDm tournament})async{
+    DatabaseReference ref = database.reference();
+    String uID = await SharedPrefUtils().getValue(key: SharedPrefKey.userId);
+    tournament.createdBy = uID;
 
-  static const String dateFormat = "dd MMM, yyyy - HH:mm a";
-  static const String profileDetail = "profileDetail";
-  static const String domains = "domains";
-  static const String tournaments = "tournaments";
+    DatabaseReference reference = ref.child(FirebaseUtil.tournaments).push();
+    String key = tournament.id ?? reference.key;
+    await ref.child(FirebaseUtil.tournaments+"/$key").set(tournament.toJson());
+    tournament.id = key;
+    return tournament;
+  }
 }
